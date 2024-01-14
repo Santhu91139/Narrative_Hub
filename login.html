@@ -1,1 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User-Login-NarrativeHub</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #141e30, #243b55);
+      color: #ffffff;
+    }
+
+    header {
+      background-color: #1f1f1f;
+      color: #ffffff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      background: linear-gradient(to right, #292e49, #536976);
+      border-radius: 8px;
+      box-shadow: 0 0 10px #292e49, 0 0 20px #536976, 0 0 30px #667184;
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    
+    form:hover {
+      box-shadow: 
+        0 0 20px #ff0000, 
+        0 0 30px #ff7f00, 
+        0 0 40px #ffff00, 
+        0 0 50px #00ff00, 
+        0 0 60px #0000ff, 
+        0 0 70px #4b0082; 
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: linear-gradient(to right, #2a2a72, #009ffd);
+      color: #ffffff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #ff4e50, #f9d423, #4caf50, #2196f3);  
+    }
+
+    p {
+      background-color: #1f1f1f;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>NarrativeHub</h1>
+</header>
+
+<form name="login_form" id="login_form" method="post" action="#" enctype="multipart/form-data">
+  <h2 style="text-align: center;">Login</h2>
+  <label for="username">Username:</label>
+  <input type="text" id="email" name="email">
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" >
+
+  <button type="submit" id="login"><a href="#">Log In</a></button>
+  <button type="submit" id="logout">Log out</button>
+</form>
+
+  <p>NarrativeHub &copy; 2023 | Contact: support@NarrativeHub.com</p>
+
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBCCNls_4WHFh2gYSabY-eukCaSrKn_oOw",
+  authDomain: "storyteller-ced83.firebaseapp.com",
+  databaseURL: "https://storyteller-ced83-default-rtdb.firebaseio.com",
+  projectId: "storyteller-ced83",
+  storageBucket: "storyteller-ced83.appspot.com",
+  messagingSenderId: "495937386414",
+  appId: "1:495937386414:web:03d228e21cbd10ed60fa3f",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+    console.log(app);
+  
+    document.getElementById("login").addEventListener("click", function() {
+        var emailv =  document.getElementById("email").value;
+        var passwordv = document.getElementById("password").value;
+    
+    document.getElementById("login").addEventListener("click", function() {
+        window.location.href = "/login_button";
+    });
+
+        signInWithEmailAndPassword(auth, emailv, passwordv)
+        .then((userCredential) => {
+
+          const user = userCredential.user;
+          console.log(user);
+          alert(user.email+" Login successfully!!!");
+          document.getElementById('logout').style.display = '';
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorMessage);
+          alert(errorMessage);
+        });		  		  
+    });  
+    document.getElementById("logout").addEventListener("click", function() {
+        signOut(auth).then(() => {
+            
+            console.log('Sign-out successful.');
+            alert('Sign-out successful.');
+            document.getElementById('logout').style.display = 'none';
+          }).catch((error) => {
+            
+            console.log('An error happened.');
+          });		  		  
+    });
+    
+  </script>
+
+
+</body>
+</html>
 
