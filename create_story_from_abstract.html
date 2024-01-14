@@ -1,1 +1,147 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Story from Abstract</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-image: url('/Users/yashwanthj/Downloads/bcimg.jpeg');
+            background-repeat: no-repeat;
+            background-size: 100%;
+            
+            padding-left: 5%;
+        }
+        html, body {
+            width: 100%;
+            height:100%;
+        }
+
+body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        select {
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-top: 10px;
+        }
+        #videoPlayer {
+            width: 100%;
+            height: auto;
+        }
+        
+        #timeline {
+            width: 100%;
+            height: 30px;
+            background-color: #ddd;
+            position: relative;
+        }
+
+        #currentTime {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: #4CAF50;
+        }
+    </style>
+    <script>
+        function generateAbstractStory() {
+            var userInput = document.getElementById("userInput").value;
+
+            var formData = new FormData();
+            formData.append("userInput", userInput);
+
+            fetch("/generate_abstract_story", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("abstractStory").value = data.story;
+                document.getElementById("localVideo").src = "/get_video_demo";
+                textToSpeechText = data.story; 
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+
+            return false;
+        }
+
+        function showVideo() {
+            var videoContainer = document.getElementById('localVideo');
+            return videoContainer;
+        }
+
+        function playTextToSpeech() {
+            
+            var textToSpeechUtterance = new SpeechSynthesisUtterance(textToSpeechText);
+            window.speechSynthesis.speak(textToSpeechUtterance);
+        }
+    </script>
+</head>
+<body>
+    <h1>Generate Story from Abstract</h1>
+
+    <form action="/generate_abstract_story" method="POST" onsubmit="return generateAbstractStory()">
+        <label for="userInput">Enter Your Story Abstract:</label>
+        <textarea id="userInput" name="userInput" placeholder="Write your story abstract here" required></textarea>
+
+        <br>
+
+        <button type="submit">Generate Abstract Story</button>
+    </form>
+
+    <div class="output">
+        <label>Generated Abstract Story:</label>
+        <textarea id="abstractStory" readonly></textarea>
+    </div>
+
+    <video controls id="localVideo" src=""></video>
+
+    <!-- <video id="videoPlayer" controls>
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div id="timeline">
+        <div id="currentTime"></div>
+    </div> -->
+
+    <!-- <button onclick="playTextToSpeech()">Play Text-to-Speech</button> -->
+
+</body>
+</html>
