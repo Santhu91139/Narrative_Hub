@@ -65,7 +65,7 @@ Contributing: This involves advance AI mechanism and high skills for implementat
 
 Credits: Santosh T(Santhu91139),Samarth S(Samdivsam),Somen Das(somen652),Yashwanth J(Yashwanth-Javaraiah)
 
-This projcet has several branches.
+This project has several branches. Sam created branch.
 
 
 
